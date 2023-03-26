@@ -3,7 +3,7 @@
 
 int main()
 {
-    float cdi,valor,valorparcela,poupado=0;
+    float cdi, valor, valorparcela, poupado=0;
     int parcelas;
 
     printf("Insira o valor do pagamento\n");
@@ -18,9 +18,10 @@ int main()
     for(int i=0;i<parcelas;i++)
     {
         poupado=poupado+valor*(cdi/12/100);
-        valor=valor-valorparcela;
+        valor-=valorparcela;
     }
-    printf("Valor Poupado: %.2f",poupado);
+    
+    printf("Valor Poupado: %.2f", poupado);
 
     return 0;
 }
