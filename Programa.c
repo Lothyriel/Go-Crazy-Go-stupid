@@ -1,27 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main()
-{
-    float cdi, valor, valorparcela, poupado=0;
-    int parcelas;
+float getPoupado(int parcelas, float valor, float cdi, float valorParcelado, float valorParcela);
 
-    printf("Insira o valor do pagamento\n");
+int main()
+{    
+    float valor;
+    printf("Insira o valor do pagamento a vista\n");
     scanf("%f",&valor);
+
+    float valorParcelado;
+    printf("Insira o valor do pagamento parcelado\n");
+    scanf("%f",&valorParcelado);
+    
+    float desconto = valorParcelado - valor;
+    if(desconto < 0)
+    {
+        printf("A vista é mais caro????");
+        return 0;
+    }
+
+    int parcelas;
     printf("Insira a quantidade de parcelas\n");
     scanf("%d",&parcelas);
+
+    float cdi;
     printf("Insira a taxa CDI em %%\n");
     scanf("%f",&cdi);
 
-    valorparcela=valor/parcelas;
+    float valorParcela = valorParcelado / parcelas;
 
-    for(int i=0;i<parcelas;i++)
-    {
-        poupado=poupado+valor*(cdi/12/100);
-        valor-=valorparcela;
-    }
-    
-    printf("Valor Poupado: %.2f", poupado);
+    float poupado = getPoupado(parcelas, valor, cdi, valorParcelado, valorParcela);
+
+    printf("Valor poupado se você parcelar: %.2f", poupado - desconto);
 
     return 0;
+}
+
+float getPoupado(int parcelas, float valor, float cdi, float valorParcelado, float valorParcela) 
+{
+    float restante = valorParcelado;
+    float poupadoAcumulado = 0;
+    for(int i = 0; i < parcelas; i++)
+    {
+        poupadoAcumulado += restante * (cdi / 12 / 100);
+        restante -= valorParcela;
+    }
+
+    return poupadoAcumulado;
 }
